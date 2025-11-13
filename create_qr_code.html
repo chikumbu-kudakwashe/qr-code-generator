@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="/create_qr.css">
+
+    <link rel="icon" type="image/png"
+        href="https://static.vecteezy.com/system/resources/previews/027/501/741/non_2x/simple-qr-code-icon-the-icon-can-be-used-for-websites-print-templates-presentation-templates-illustrations-etc-free-vector.jpg">
+
+</head>
+
+<body>
+    <header >
+        <div class="d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-qrcode icon me-3"></i>
+            <h1 class="fs-1">QR Code Generator</h1>
+        </div>
+       
+        <p class="mt-3 fs-5 opacity-75 container">
+            Instantly create beautifully styled QR codes with full customization
+        </p>
+
+    </header>
+
+    <section class="container mb-5">
+        <div class="card p-4">
+            <h4 class="mb-3 text-center">Customize Your QR Code</h4>
+
+            <form id="form">
+                <!-- Data Input -->
+                <div class="mb-3">
+                    <label for="data" class="form-label">Data</label>
+                    <textarea name="" id="data" cols="5" rows="2" class="form-control" id="data" placeholder="Enter URL or text" required></textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="mb-3">
+                    <label for="image" class="form-label">Logo Image (Optional)</label>
+                    <input type="file" class="form-control" id="image" accept="image/*" />
+                </div>
+
+                <!-- Size Controls -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="width" class="form-label">Width</label>
+                        <input type="number" class="form-control" id="width" placeholder="300" value="300" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="height" class="form-label">Height</label>
+                        <input type="number" class="form-control" id="height" placeholder="300" value="300" />
+                    </div>
+                </div>
+
+                <!-- Dots Options -->
+                <div class="mb-3">
+                    <label for="dots-style" class="form-label">Dots Style</label>
+                    <select class="form-select" id="dots-style">
+                        <option value="square" selected>Square</option>
+                        <option value="dots">Dots</option>
+                        <option value="rounded">Rounded</option>
+                        <option value="extra-rounded">Extra Rounded</option>
+                        <option value="classy">Classy</option>
+                        <option value="extra-classy">Extra Classy</option>
+                    </select>
+                </div>
+
+                <!-- Dots Color -->
+                <div class="mb-3">
+                    <label for="dots-color" class="form-label">Dots Color</label>
+                    <input type="color" class="form-control form-control-color" id="dots-color" value="#000000" />
+                </div>
+
+                <!-- Corners Square Options -->
+                <div class="mb-3">
+                    <label for="corners-square" class="form-label">Corners Square Style</label>
+                    <select class="form-select" id="corners-style">
+                        <option value="square" selected>Square</option>
+                        <option value="extra-rounded">Extra Rounded</option>
+                        <option value="classy">Classy</option>
+                    </select>
+                </div>
+
+                <!-- Corners Square Color -->
+                <div class="mb-3">
+                    <label for="corner-square-color" class="form-label">Corners Square Color</label>
+                    <input type="color" class="form-control form-control-color" id="corner-color"
+                        value="#0d6efd" />
+                </div>
+
+                <!-- Corners Dot Options -->
+                <div class="mb-3">
+                    <label for="corners-dot" class="form-label">Corners Dot Style</label>
+                    <select class="form-select" id="corners-dot">
+                        <option value="square" selected>Square</option>
+                        <option value="dot">Dot</option>
+                    </select>
+                </div>
+
+                <!-- Corners Dot Color -->
+                <div class="mb-3">
+                    <label for="corner-dot-color" class="form-label">Corners Dot Color</label>
+                    <input type="color" class="form-control form-control-color" id="corner-dot-color" value="#0d6efd" />
+                </div>
+
+                <!-- Background Color -->
+                <div class="mb-3">
+                    <label for="background-color" class="form-label">Background Color</label>
+                    <input type="color" class="form-control form-control-color" id="background-color" value="#ffffff" />
+                </div>
+
+                <!-- Download Format -->
+                <div class="mb-3">
+                    <label for="format" class="form-label">Download Format</label>
+                    <select class="form-select" id="format">
+                        <option value="svg" selected>SVG</option>
+                        <option value="png">PNG</option>
+                        <option value="jpeg">JPEG</option>
+                        <option value="webp">WEBP</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                        <i class="fa-solid fa-gear me-2"></i>Generate QR Code
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="container mb-5" id="qr-section" style="display: none;">
+        <div class="card p-4 text-center">
+            <h4>Your QR Code</h4>
+
+            <div id="canvas" class="my-3"></div>
+
+            <div class="text-center">
+                <button id="download-btn" class="btn btn-primary btn-lg px-4 my-2 me-2">
+                    <i class="fa-solid fa-download me-1"></i> Download
+                </button>
+                
+                <button id="close-btn" class="btn btn-outline-danger btn-lg px-4 my-2">
+                    <i class="fa-solid fa-xmark me-1"></i> Close
+                </button>
+            </div>
+           
+        </div>
+    </section>
+
+
+
+    <footer class="text-center py-4 mt-5 border-top">
+        <p class="mb-1" style="font-family: 'Space Grotesk', sans-serif; font-size: 1rem;">
+            Developed by <strong>&lt;VaChikumbu /&gt;</strong>
+        </p>
+    
+        <div class="d-flex justify-content-center gap-3">
+            <a href="https://github.com/chikumbu-kudakwashe" target="_blank" class="text-light" style="font-size: 1.4rem;">
+                <i class="fa-brands fa-github"></i>
+            </a>
+    
+            <a href="https://www.linkedin.com/in/kudakwashe-chikumbu" target="_blank" class="text-light"
+                style="font-size: 1.4rem;">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>
